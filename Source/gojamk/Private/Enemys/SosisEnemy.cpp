@@ -1,28 +1,24 @@
 
 
 
-#include "gojamk/Public/Enemys/SosisEnemy.h"
+#include "Enemys/SosisEnemy.h"
 
-ASosisEnemy::ASosisEnemy(): AEnemyBase()
+#include "AIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
+
+ASosisEnemy::ASosisEnemy()
 {
-	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));
+	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 }
 
 void ASosisEnemy::BeginPlay()
 {
-	OnActorHit.AddDynamic(this, &ASosisEnemy::OnHit);
-	HAIBaseComponent->OnDoAction.AddDynamic(this, &ASosisEnemy::OnDoAction);
+	Super::BeginPlay();
+
+	HAIBaseComponent->OnDoAction.AddDynamic(this, &ASosisEnemy::DoAction);
 }
 
-void ASosisEnemy::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit)
-{
-	if (OtherActor->ActorHasTag("Wall"))
-	{
-		
-	}
-}
-
-void ASosisEnemy::OnDoAction(int ActionID)
+void ASosisEnemy::DoAction(int ActionID)
 {
 	switch (ActionID)
 	{
@@ -34,8 +30,13 @@ void ASosisEnemy::OnDoAction(int ActionID)
 
 void ASosisEnemy::ThrowSosis()
 {
-	if(!targetActor){return;}
-	FVector Direction = targetActor->GetActorLocation() - GetActorLocation();
+	AAIController* AIController = Cast<AAIController>(GetController());
+	if (!AIController){return;}
+	UBlackboardComponent* BlackboardComponent = AIController->GetBlackboardComponent();
+	if (!BlackboardComponent){return;}
+	TargetActor = Cast<AActor>(BlackboardComponent->GetValueAsObject("targetActor"));
+	if (!TargetActor){return;}
+	FVector Direction = TargetActor->GetActorLocation() - GetActorLocation();
 	Direction.Normalize();
-	ProjectileMovementComponent->Velocity = Direction * 1000;
+	ProjectileMovement->Velocity = Direction * 1000;
 }
