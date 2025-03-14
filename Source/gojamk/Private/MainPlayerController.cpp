@@ -35,10 +35,19 @@ void AMainPlayerController::OnUnPossess()
 
 void AMainPlayerController::Move(const FInputActionValue& Value)
 {
-	const FVector2d movementVector = Value.Get<FVector2D>();
-	if (!player){return;}
-	player->AddMovementInput(player->GetActorForwardVector(), movementVector.Y);
-	player->AddMovementInput(player->GetActorRightVector(), movementVector.X);
+	FVector2D MovementVector = Value.Get<FVector2D>();
+	if (!player->Controller)
+	{
+		return;
+	}
+	const FRotator Rotation = player->Controller->GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+	player->AddMovementInput(ForwardDirection, MovementVector.Y);
+	player->AddMovementInput(RightDirection, MovementVector.X);
 }
 
 void AMainPlayerController::Look(const FInputActionValue& Value)
