@@ -1,21 +1,23 @@
 
-#include "gojamk/Public/Enemys/EnemyBase.h"
-#include "AIController.h"
-#include "BehaviorTree/BlackboardComponent.h"
-#include "Kismet/GameplayStatics.h"
 
+
+#include "Enemys/EnemyBase.h"
+#include "HAIBaseComponent.h"
 
 AEnemyBase::AEnemyBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	Capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
+	RootComponent = Capsule;
+	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
+	Mesh->SetupAttachment(Capsule);
 	HAIBaseComponent = CreateDefaultSubobject<UHAIBaseComponent>(TEXT("HAIBaseComponent"));
-	SkeletalMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMeshComponent"));
-	SkeletalMeshComponent->SetupAttachment(RootComponent);
 }
 
 void AEnemyBase::BeginPlay()
 {
 	Super::BeginPlay();
+	
 }
 
 void AEnemyBase::Tick(float DeltaTime)
@@ -23,5 +25,4 @@ void AEnemyBase::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
-
 
