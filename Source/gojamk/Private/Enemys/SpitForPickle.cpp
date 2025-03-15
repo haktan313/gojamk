@@ -21,8 +21,8 @@ void ASpitForPickle::Spit()
 {
 	if (target)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Spit"));
-		FVector direction = target->GetActorLocation() - GetActorLocation();
+		FVector targetLocation = target->GetVelocity() * FVector(.35f, .35f, .35f) + target->GetActorLocation();
+		FVector direction = targetLocation - GetActorLocation();
 		direction.Normalize();
 		ProjectileMovement->Velocity = direction * BounceForce;
 	}
