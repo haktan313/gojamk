@@ -28,6 +28,8 @@ public:
 
 	ASpitForPickle();
 
+	UFUNCTION()
+	void OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
 	virtual void BeginPlay() override;
 
 	FTimerHandle spitTimer;

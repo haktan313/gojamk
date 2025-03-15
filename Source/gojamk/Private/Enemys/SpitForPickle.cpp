@@ -11,10 +11,19 @@ ASpitForPickle::ASpitForPickle()
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 }
 
+void ASpitForPickle::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit)
+{
+	if (OtherActor->Tags.Contains("Player"))
+	{
+		Destroy();
+	}
+}
+
 void ASpitForPickle::BeginPlay()
 {
 	Super::BeginPlay();
 	GetWorld()->GetTimerManager().SetTimer(spitTimer, this, &ASpitForPickle::Spit, 0.1f, false);
+	OnActorHit.AddDynamic(this, &ASpitForPickle::OnHit);
 }
 
 void ASpitForPickle::Spit()
