@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "HTokenSystemComponent.h"
 #include "GameFramework/Character.h"
 #include "JoseMorinho.generated.h"
 
@@ -23,5 +24,7 @@ public:
 	class USpringArmComponent* SpringArm;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Camera")
 	class UCameraComponent* Camera;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Components")
+	TObjectPtr<UHTokenSystemComponent> HTokenSystemComponent;
 	
 };

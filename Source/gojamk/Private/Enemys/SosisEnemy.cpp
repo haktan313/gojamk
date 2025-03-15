@@ -68,5 +68,5 @@ void ASosisEnemy::ThrowSosis()
 	FVector Direction = TargetActor->GetActorLocation() - GetActorLocation();
 	Direction.Normalize();
 	Direction.Z = 0;
-	ProjectileMovement->Velocity = Direction * 1000;
+	ProjectileMovement->Velocity = Direction * BounceForce;
 }

@@ -3,6 +3,7 @@
 
 #include "CoreMinimal.h"
 #include "HAIBaseComponent.h"
+#include "HTokenSystemComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Actor.h"
 #include "EnemyBase.generated.h"
@@ -19,6 +20,8 @@ public:
 	TObjectPtr<USkeletalMeshComponent> Mesh;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
 	TObjectPtr<UHAIBaseComponent> HAIBaseComponent;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
+	TObjectPtr<UHTokenSystemComponent> HTokenSystemComponent;
 	UPROPERTY()
 	TObjectPtr<AActor> TargetActor;
 	

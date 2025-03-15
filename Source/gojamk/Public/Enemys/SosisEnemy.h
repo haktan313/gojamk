@@ -15,6 +15,8 @@ class GOJAMK_API ASosisEnemy : public AEnemyBase
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
 	TObjectPtr<UProjectileMovementComponent> ProjectileMovement;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
+	float BounceForce = 1000;
 
 	ASosisEnemy();
 
