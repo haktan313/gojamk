@@ -12,6 +12,7 @@ AJoseMorinho::AJoseMorinho()
 	SpringArm->SetupAttachment(RootComponent);
 	Camera->SetupAttachment(SpringArm);
 	HTokenSystemComponent = CreateDefaultSubobject<UHTokenSystemComponent>(TEXT("HTokenSystemComponent"));
+	HStatHandler = CreateDefaultSubobject<UHStatHandler>(TEXT("HStatHandler"));
 }
 
 void AJoseMorinho::BeginPlay()

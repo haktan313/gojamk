@@ -3,7 +3,9 @@
 
 #include "CoreMinimal.h"
 #include "HAIBaseComponent.h"
+#include "HStatHandler.h"
 #include "HTokenSystemComponent.h"
+#include "SpitForPickle.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Actor.h"
 #include "EnemyBase.generated.h"
@@ -22,18 +24,31 @@ public:
 	TObjectPtr<UHAIBaseComponent> HAIBaseComponent;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
 	TObjectPtr<UHTokenSystemComponent> HTokenSystemComponent;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
+	TObjectPtr<UHStatHandler> HStatHandler;
 	UPROPERTY()
 	TObjectPtr<AActor> TargetActor;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
 	TObjectPtr<class UProjectileMovementComponent> ProjectileMovement;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
 	float BounceForce = 1000;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
+	TSubclassOf<ASpitForPickle> SpitForPickleClass;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
+	TSubclassOf<AEnemyBase> EnemyClass;
 	
 	AEnemyBase();
+
+	AActor* GetTargetActor();
 	
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION()
+	void OnDeath(UAnimMontage* DeathAnimation);
+	UFUNCTION()
+	void OnDamageResponse(UAnimMontage* DamageAnimation);
 
 	UFUNCTION()
 	void OnOverlap(AActor* OverlappedActor, AActor* OtherActor);
@@ -44,5 +59,8 @@ public:
 	UFUNCTION()
 	void DoAction(int ActionID);
 	void ThrowSosis();
+	void Spit();
+
+	void SplitPickle();
 
 };

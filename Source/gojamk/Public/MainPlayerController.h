@@ -16,9 +16,13 @@ class GOJAMK_API AMainPlayerController : public APlayerController
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void OnUnPossess() override;
 
-	void Move(const FInputActionValue& Value);
+	void Move(const FInputActionInstance& Value);
 	void Look(const FInputActionValue& Value);
 	void HandleJump();
+
+	void AttackWithHammer();
+
+	void Dash();
 
 	TObjectPtr<class AJoseMorinho> player;
 	TObjectPtr<UEnhancedInputComponent> EnhancedInputComponent;
@@ -31,4 +35,8 @@ public:
 	TObjectPtr<UInputAction> LookAction;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Player Input|Movement")
 	TObjectPtr<UInputAction> JumpAction;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Player Input|Movement")
+	TObjectPtr<UInputAction> AttackAction;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Player Input|Movement")
+	TObjectPtr<UInputAction> DashAction;
 };

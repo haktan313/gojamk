@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "HStatHandler.h"
 #include "HTokenSystemComponent.h"
 #include "GameFramework/Character.h"
 #include "JoseMorinho.generated.h"
@@ -26,5 +27,7 @@ public:
 	class UCameraComponent* Camera;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UHTokenSystemComponent> HTokenSystemComponent;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Components")
+	TObjectPtr<UHStatHandler> HStatHandler;
 	
 };
