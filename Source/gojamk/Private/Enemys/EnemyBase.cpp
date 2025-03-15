@@ -11,10 +11,6 @@
 AEnemyBase::AEnemyBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	Capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
-	RootComponent = Capsule;
-	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
-	Mesh->SetupAttachment(Capsule);
 	HAIBaseComponent = CreateDefaultSubobject<UHAIBaseComponent>(TEXT("HAIBaseComponent"));
 	HTokenSystemComponent = CreateDefaultSubobject<UHTokenSystemComponent>(TEXT("HTokenSystemComponent"));
 	HStatHandler = CreateDefaultSubobject<UHStatHandler>(TEXT("HStatHandler"));
@@ -39,7 +35,10 @@ void AEnemyBase::BeginPlay()
 	HAIBaseComponent->OnDoAction.AddDynamic(this, &AEnemyBase::DoAction);
 	OnActorBeginOverlap.AddDynamic(this, &AEnemyBase::OnOverlap);
 	OnActorHit.AddDynamic(this, &AEnemyBase::OnHit);
-
+	if (Tags.Contains("Pickle"))
+	{
+		GetWorld()->GetTimerManager().SetTimer(spitTimer, this, &AEnemyBase::Spit, .5f, true);
+	}
 }
 
 void AEnemyBase::Tick(float DeltaTime)
@@ -52,8 +51,10 @@ void AEnemyBase::OnDeath(UAnimMontage* DeathAnimation)
 {
 	if (Tags.Contains("Pickle"))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Pickle is dead"));
 		SplitPickle();
+	}else
+	{
+		Destroy();
 	}
 }
 
@@ -95,16 +96,12 @@ void AEnemyBase::DoAction(int ActionID)
 	case 0:
 		ThrowSosis();
 		break;
-	case 1:
-		Spit();
-		break;
 	}
 }
 
 void AEnemyBase::ThrowSosis()
 {
-	
-	if (!GetTargetActor()){return;}
+	if (GetTargetActor() == nullptr){return;}
 	FVector Direction = GetTargetActor()->GetActorLocation() - GetActorLocation();
 	Direction.Normalize();
 	Direction.Z = 0;
@@ -117,12 +114,16 @@ void AEnemyBase::Spit()
 	SpawnParameters.Owner = this;
 	ASpitForPickle* spit = GetWorld()->SpawnActor<ASpitForPickle>(SpitForPickleClass, GetActorLocation() + GetActorForwardVector() * 50, FRotator::ZeroRotator, SpawnParameters);
 	spit->target = GetTargetActor();
-	HAIBaseComponent->OnActionEnd.Broadcast(E_DoActionResult::success);
 }
 
 void AEnemyBase::SplitPickle()
 {
 	FActorSpawnParameters SpawnParameters;
 	SpawnParameters.Owner = this;
+	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+	GetWorld()->SpawnActor<AEnemyBase>(EnemyClass, GetActorLocation() + FVector(100, 0, 0), FRotator::ZeroRotator, SpawnParameters);
+	GetWorld()->SpawnActor<AEnemyBase>(EnemyClass, GetActorLocation() + FVector(-100, 0, 0), FRotator::ZeroRotator, SpawnParameters);
+	GetWorld()->SpawnActor<AEnemyBase>(EnemyClass, GetActorLocation() + FVector(0, -100, 0), FRotator::ZeroRotator, SpawnParameters);
+	Destroy();
 }
 
