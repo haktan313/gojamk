@@ -24,11 +24,25 @@ public:
 	TObjectPtr<UHTokenSystemComponent> HTokenSystemComponent;
 	UPROPERTY()
 	TObjectPtr<AActor> TargetActor;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
+	TObjectPtr<class UProjectileMovementComponent> ProjectileMovement;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
+	float BounceForce = 1000;
 	
 	AEnemyBase();
 	
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION()
+	void OnOverlap(AActor* OverlappedActor, AActor* OtherActor);
+	UFUNCTION()
+	void OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
+	FTimerHandle bouncedEndTimer;
+	void BouncedEnd();
+	UFUNCTION()
+	void DoAction(int ActionID);
+	void ThrowSosis();
 
 };
