@@ -50,6 +50,8 @@ void AMainPlayerController::Move(const FInputActionInstance& Value)
 
 	player->AddMovementInput(ForwardDirection, MovementVector.Y);
 	player->AddMovementInput(RightDirection, MovementVector.X);
+
+	
 }
 
 void AMainPlayerController::Look(const FInputActionValue& Value)
@@ -107,6 +109,6 @@ void AMainPlayerController::AttackWithHammer()
 
 void AMainPlayerController::Dash()
 {
-	
+
 }
 

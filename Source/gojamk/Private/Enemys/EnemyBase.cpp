@@ -37,7 +37,7 @@ void AEnemyBase::BeginPlay()
 	OnActorHit.AddDynamic(this, &AEnemyBase::OnHit);
 	if (Tags.Contains("Pickle"))
 	{
-		GetWorld()->GetTimerManager().SetTimer(spitTimer, this, &AEnemyBase::Spit, .5f, true);
+		GetWorld()->GetTimerManager().SetTimer(spitTimer, this, &AEnemyBase::Spit, 1.f, true);
 	}
 }
 
@@ -54,7 +54,8 @@ void AEnemyBase::OnDeath(UAnimMontage* DeathAnimation)
 		SplitPickle();
 	}else
 	{
-		Destroy();
+		
+		//Destroy();
 	}
 }
 
