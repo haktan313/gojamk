@@ -11,6 +11,7 @@ AJoseMorinho::AJoseMorinho()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	SpringArm->SetupAttachment(RootComponent);
 	Camera->SetupAttachment(SpringArm);
+	
 	HTokenSystemComponent = CreateDefaultSubobject<UHTokenSystemComponent>(TEXT("HTokenSystemComponent"));
 	HStatHandler = CreateDefaultSubobject<UHStatHandler>(TEXT("HStatHandler"));
 }

@@ -26,8 +26,6 @@ void AMainPlayerController::OnPossess(APawn* aPawn)
 	EnhancedInputSubsystem->AddMappingContext(DefaultMappingContext,0);
 
 	EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &AMainPlayerController::Move);
-	//EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMainPlayerController::Look);
-	//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AMainPlayerController::HandleJump);
 	EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Started, this, &AMainPlayerController::AttackWithHammer);
 	EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Started, this, &AMainPlayerController::Dash);
 }
