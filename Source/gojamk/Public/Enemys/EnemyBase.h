@@ -8,18 +8,15 @@
 #include "SpitForPickle.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/Character.h"
 #include "EnemyBase.generated.h"
 
 UCLASS()
-class GOJAMK_API AEnemyBase : public APawn
+class GOJAMK_API AEnemyBase : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
-	TObjectPtr<UCapsuleComponent> Capsule;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
-	TObjectPtr<USkeletalMeshComponent> Mesh;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
 	TObjectPtr<UHAIBaseComponent> HAIBaseComponent;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
@@ -59,6 +56,7 @@ public:
 	UFUNCTION()
 	void DoAction(int ActionID);
 	void ThrowSosis();
+	FTimerHandle spitTimer;
 	void Spit();
 
 	void SplitPickle();
