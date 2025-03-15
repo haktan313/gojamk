@@ -1,4 +1,0 @@
-
-
-
-#include "Enemys/SosisEnemy.h"
