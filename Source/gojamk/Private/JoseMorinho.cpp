@@ -1,5 +1,8 @@
 
 #include "gojamk/Public/JoseMorinho.h"
+
+#include "HWidget_BaseStat.h"
+#include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -19,7 +22,16 @@ AJoseMorinho::AJoseMorinho()
 void AJoseMorinho::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	if (BaseStatWidgetClass)
+	{
+		UHWidget_BaseStat* BaseStatWidget = CreateWidget<UHWidget_BaseStat>(GetWorld(), BaseStatWidgetClass);
+		if (BaseStatWidget)
+		{
+			BaseStatWidget->StatHandlerObjects.Add("Player", HStatHandler);
+			BaseStatWidget->AddToViewport();
+		}
+	}
 }
 
 void AJoseMorinho::Tick(float DeltaTime)

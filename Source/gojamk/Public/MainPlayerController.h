@@ -39,4 +39,6 @@ public:
 	TObjectPtr<UInputAction> AttackAction;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Player Input|Movement")
 	TObjectPtr<UInputAction> DashAction;
+
+	
 };
