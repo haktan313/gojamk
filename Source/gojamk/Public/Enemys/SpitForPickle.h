@@ -22,18 +22,22 @@ public:
 	TObjectPtr<class UProjectileMovementComponent> ProjectileMovement;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Spit")
 	float BounceForce = 1000;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Spit")
+	float Damage = 10;
 	UPROPERTY(BlueprintReadOnly,meta = (ExposeOnSpawn = true))
 	TObjectPtr<AActor> target;
 	
-
 	ASpitForPickle();
-
+	
 	UFUNCTION()
-	void OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
+	void OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor);
 	virtual void BeginPlay() override;
 
 	FTimerHandle spitTimer;
 	void Spit();
+
+	FTimerHandle destroyTimer;
+	void DestroySelf();
 
 	virtual void Tick(float DeltaTime) override;
 
