@@ -17,6 +17,13 @@ public:
 	TObjectPtr<UProjectileMovementComponent> ProjectileMovement;
 
 	ASosisEnemy();
+
+	UFUNCTION()
+	void OnOverlap(AActor* OverlappedActor, AActor* OtherActor);
+	UFUNCTION()
+	void OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit);
+	FTimerHandle bouncedEndTimer;
+	void BouncedEnd();
 	
 	virtual void BeginPlay() override;
 
