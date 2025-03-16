@@ -69,9 +69,12 @@ void AEnemyBase::OnOverlap(AActor* OverlappedActor, AActor* OtherActor)
 	{
 		if (OtherActor == GetTargetActor())
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Sosis hit the target"));
+			FS_DamageInfo damageInfo;
+			damageInfo.AmountOfDamage = throwselfDamage;
+			damageInfo.DamageReactionAnimation = nullptr;
+			damageInfo.DeathReactionAnimation = nullptr;
+			HStatHandler->DamageTo(damageInfo, OtherActor);
 		}
-		return;
 	}
 }
 

@@ -47,6 +47,8 @@ public:
 	UFUNCTION()
 	void OnDamageResponse(UAnimMontage* DamageAnimation);
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Enemy")
+	float throwselfDamage = 1;
 	UFUNCTION()
 	void OnOverlap(AActor* OverlappedActor, AActor* OtherActor);
 	UFUNCTION()
