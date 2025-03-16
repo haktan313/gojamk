@@ -57,6 +57,8 @@ public:
 	void DoAction(int ActionID);
 	void ThrowSosis();
 	FTimerHandle spitTimer;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Enemy")
+	float perSecondForSpit = 1;
 	void Spit();
 
 	void SplitPickle();

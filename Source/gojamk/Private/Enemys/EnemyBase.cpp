@@ -37,7 +37,7 @@ void AEnemyBase::BeginPlay()
 	OnActorHit.AddDynamic(this, &AEnemyBase::OnHit);
 	if (Tags.Contains("Pickle"))
 	{
-		GetWorld()->GetTimerManager().SetTimer(spitTimer, this, &AEnemyBase::Spit, 1.f, true);
+		GetWorld()->GetTimerManager().SetTimer(spitTimer, this, &AEnemyBase::Spit, perSecondForSpit, true);
 	}
 }
 
@@ -65,9 +65,13 @@ void AEnemyBase::OnDamageResponse(UAnimMontage* DamageAnimation)
 
 void AEnemyBase::OnOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
-	if (OtherActor == GetTargetActor())
+	if (Tags.Contains("Sosis"))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Sosis hit the target"));
+		if (OtherActor == GetTargetActor())
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Sosis hit the target"));
+		}
+		return;
 	}
 }
 
@@ -110,10 +114,16 @@ void AEnemyBase::ThrowSosis()
 
 void AEnemyBase::Spit()
 {
-	FActorSpawnParameters SpawnParameters;
-	SpawnParameters.Owner = this;
-	ASpitForPickle* spit = GetWorld()->SpawnActor<ASpitForPickle>(SpitForPickleClass, GetActorLocation() + GetActorForwardVector() * 50, FRotator::ZeroRotator, SpawnParameters);
-	spit->target = GetTargetActor();
+	if (GetTargetActor())
+	{
+		FActorSpawnParameters SpawnParameters;
+		SpawnParameters.Owner = this;
+		ASpitForPickle* spit = GetWorld()->SpawnActor<ASpitForPickle>(SpitForPickleClass, GetActorLocation() + GetActorForwardVector() * 50, FRotator::ZeroRotator, SpawnParameters);
+		if (spit)
+		{
+			spit->target = GetTargetActor();
+		}
+	}
 }
 
 void AEnemyBase::SplitPickle()
