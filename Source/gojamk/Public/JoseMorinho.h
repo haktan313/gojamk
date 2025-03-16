@@ -12,7 +12,9 @@ UCLASS()
 class GOJAMK_API AJoseMorinho : public ACharacter
 {
 	GENERATED_BODY()
-	
+
+	UFUNCTION()
+	void OnDeath(UAnimMontage* DeathAnimation);
 	AJoseMorinho();
 	
 	virtual void BeginPlay() override;

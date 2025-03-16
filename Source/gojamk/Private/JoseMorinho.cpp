@@ -5,6 +5,13 @@
 #include "Blueprint/UserWidget.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Kismet/GameplayStatics.h"
+
+void AJoseMorinho::OnDeath(UAnimMontage* DeathAnimation)
+{
+	FString currentLevel = UGameplayStatics::GetCurrentLevelName(GetWorld(), true);
+	UGameplayStatics::OpenLevel(GetWorld(), FName(*currentLevel));
+}
 
 AJoseMorinho::AJoseMorinho()
 {
@@ -17,6 +24,7 @@ AJoseMorinho::AJoseMorinho()
 	
 	HTokenSystemComponent = CreateDefaultSubobject<UHTokenSystemComponent>(TEXT("HTokenSystemComponent"));
 	HStatHandler = CreateDefaultSubobject<UHStatHandler>(TEXT("HStatHandler"));
+	HStatHandler->OnDeath.AddDynamic(this, &AJoseMorinho::OnDeath);
 }
 
 void AJoseMorinho::BeginPlay()
