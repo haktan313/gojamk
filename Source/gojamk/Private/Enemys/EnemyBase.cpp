@@ -54,8 +54,7 @@ void AEnemyBase::OnDeath(UAnimMontage* DeathAnimation)
 		SplitPickle();
 	}else
 	{
-		
-		//Destroy();
+		Destroy();
 	}
 }
 

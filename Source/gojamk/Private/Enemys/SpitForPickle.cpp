@@ -1,5 +1,7 @@
 
 #include "Enemys/SpitForPickle.h"
+
+#include "HStatHandler.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 ASpitForPickle::ASpitForPickle()
@@ -11,10 +13,28 @@ ASpitForPickle::ASpitForPickle()
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 }
 
+void ASpitForPickle::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
+{
+	if (OtherActor->Tags.Contains("Player"))
+	{
+		UHStatHandler* statHandler = OtherActor->FindComponentByClass<UHStatHandler>();
+		if (statHandler)
+		{
+			FS_DamageInfo damageInfo;
+			damageInfo.AmountOfDamage = Damage;
+			damageInfo.DamageReactionAnimation = nullptr;
+			damageInfo.DeathReactionAnimation = nullptr;
+			statHandler->DamageTo(damageInfo, OtherActor);
+		}
+		Destroy();
+	}
+}
+
 void ASpitForPickle::BeginPlay()
 {
 	Super::BeginPlay();
 	GetWorld()->GetTimerManager().SetTimer(spitTimer, this, &ASpitForPickle::Spit, 0.1f, false);
+	OnActorBeginOverlap.AddDynamic(this, &ASpitForPickle::OnOverlapBegin);
 }
 
 void ASpitForPickle::Spit()
@@ -25,7 +45,13 @@ void ASpitForPickle::Spit()
 		FVector direction = targetLocation - GetActorLocation();
 		direction.Normalize();
 		ProjectileMovement->Velocity = direction * BounceForce;
+		GetWorld()->GetTimerManager().SetTimer(destroyTimer, this, &ASpitForPickle::DestroySelf, 2.f, false);
 	}
+}
+
+void ASpitForPickle::DestroySelf()
+{
+	Destroy();
 }
 
 void ASpitForPickle::Tick(float DeltaTime)
