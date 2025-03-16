@@ -40,5 +40,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Player Input|Movement")
 	TObjectPtr<UInputAction> DashAction;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Player Animations")
+	TObjectPtr<UAnimMontage> DashForwardAnimation;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Player Animations")
+	TObjectPtr<UAnimMontage> DashBackwardAnimation;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Player Animations")
+	TObjectPtr<UAnimMontage> DashLeftAnimation;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Player Animations")
+	TObjectPtr<UAnimMontage> DashRightAnimation;
+
 	
 };

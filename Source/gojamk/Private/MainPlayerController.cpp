@@ -109,6 +109,6 @@ void AMainPlayerController::AttackWithHammer()
 
 void AMainPlayerController::Dash()
 {
-
+	FVector velocity = player->GetVelocity();
 }
 

@@ -23,6 +23,8 @@ class GOJAMK_API AJoseMorinho : public ACharacter
 
 public:
 
+	TObjectPtr<class UAnimInstance> AnimInstancePlayer;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Camera")
 	class USpringArmComponent* SpringArm;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Camera")
