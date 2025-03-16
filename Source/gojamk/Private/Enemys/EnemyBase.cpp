@@ -7,6 +7,7 @@
 #include "HAIBaseComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 AEnemyBase::AEnemyBase()
 {
@@ -21,11 +22,12 @@ AEnemyBase::AEnemyBase()
 
 AActor* AEnemyBase::GetTargetActor()
 {
-	AAIController* AIController = Cast<AAIController>(GetController());
+	/*AAIController* AIController = Cast<AAIController>(GetController());
 	if (!AIController){return nullptr;}
 	UBlackboardComponent* BlackboardComponent = AIController->GetBlackboardComponent();
 	if (!BlackboardComponent){return nullptr;}
-	TargetActor = Cast<AActor>(BlackboardComponent->GetValueAsObject("targetActor"));
+	TargetActor = Cast<AActor>(BlackboardComponent->GetValueAsObject("targetActor"));*/
+	TargetActor = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	return TargetActor;
 }
 
@@ -54,7 +56,10 @@ void AEnemyBase::OnDeath(UAnimMontage* DeathAnimation)
 		SplitPickle();
 	}else
 	{
-		HStatHandler->IncreaseStatValue(enemyLootType,1,GetTargetActor());
+		if (GetTargetActor() != nullptr)
+		{
+			HStatHandler->IncreaseStatValue(enemyLootType,1,GetTargetActor());
+		}
 		Destroy();
 	}
 }
@@ -68,7 +73,7 @@ void AEnemyBase::OnOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
 	if (Tags.Contains("Sosis"))
 	{
-		if (OtherActor == GetTargetActor())
+		if (GetTargetActor() != nullptr && OtherActor == GetTargetActor())
 		{
 			FS_DamageInfo damageInfo;
 			damageInfo.AmountOfDamage = throwselfDamage;

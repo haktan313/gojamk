@@ -35,7 +35,7 @@ void AJoseMorinho::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (BaseStatWidgetClass)
+	/*if (BaseStatWidgetClass)
 	{
 		UHWidget_BaseStat* BaseStatWidget = CreateWidget<UHWidget_BaseStat>(GetWorld(), BaseStatWidgetClass);
 		if (BaseStatWidget)
@@ -43,7 +43,8 @@ void AJoseMorinho::BeginPlay()
 			BaseStatWidget->StatHandlerObjects.Add("Player", HStatHandler);
 			BaseStatWidget->AddToViewport();
 		}
-	}
+	}*/
+	AnimInstancePlayer = Cast<UAnimInstance>(GetMesh()->GetAnimInstance());
 }
 
 void AJoseMorinho::Tick(float DeltaTime)

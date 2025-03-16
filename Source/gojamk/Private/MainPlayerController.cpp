@@ -37,7 +37,7 @@ void AMainPlayerController::OnUnPossess()
 
 void AMainPlayerController::Move(const FInputActionInstance& Value)
 {
-	FVector2D MovementVector = Value.GetValue().Get<FVector2d>(); 
+	MovementVector = Value.GetValue().Get<FVector2d>();
 	if (!player->Controller)
 	{
 		return;
@@ -50,8 +50,6 @@ void AMainPlayerController::Move(const FInputActionInstance& Value)
 
 	player->AddMovementInput(ForwardDirection, MovementVector.Y);
 	player->AddMovementInput(RightDirection, MovementVector.X);
-
-	
 }
 
 void AMainPlayerController::Look(const FInputActionValue& Value)
@@ -109,6 +107,25 @@ void AMainPlayerController::AttackWithHammer()
 
 void AMainPlayerController::Dash()
 {
+ 	if (!player->AnimInstancePlayer){return;}
 	FVector velocity = player->GetVelocity();
+	player->AnimInstancePlayer->Montage_Play(DashForwardAnimation);
+	player->LaunchCharacter(player->GetActorForwardVector() * 2000, true, true);
+	/*if (velocity.Size() == 0)
+    {
+ 		player->AnimInstancePlayer->Montage_Play(DashForwardAnimation);
+    }
+	else
+	{
+		if (FMath::Abs(MovementVector.X) > FMath::Abs(MovementVector.Y))
+		{
+			dashAnimation = MovementVector.X > 0 ? DashRightAnimation : DashLeftAnimation;
+		}
+		else
+		{
+			dashAnimation = MovementVector.Y > 0 ? DashForwardAnimation : DashBackwardAnimation;
+		}
+		player->AnimInstancePlayer->Montage_Play(dashAnimation);
+	}*/
 }
 

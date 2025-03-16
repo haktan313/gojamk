@@ -26,6 +26,8 @@ class GOJAMK_API AMainPlayerController : public APlayerController
 
 	TObjectPtr<class AJoseMorinho> player;
 	TObjectPtr<UEnhancedInputComponent> EnhancedInputComponent;
+
+	FVector2d MovementVector;
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Player Input|Movement")
 	TObjectPtr<class UInputMappingContext> DefaultMappingContext;
@@ -48,6 +50,8 @@ public:
 	TObjectPtr<UAnimMontage> DashLeftAnimation;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Player Animations")
 	TObjectPtr<UAnimMontage> DashRightAnimation;
+	UPROPERTY()
+	TObjectPtr<UAnimMontage> dashAnimation;
 
 	
 };

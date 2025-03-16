@@ -34,7 +34,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UHStatHandler> HStatHandler;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Player Stats")
-	TSubclassOf<class UUserWidget> BaseStatWidgetClass;
+	//UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Player Stats")
+	//TSubclassOf<class UUserWidget> BaseStatWidgetClass;
 	
 };
