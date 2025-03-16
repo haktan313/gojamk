@@ -54,6 +54,7 @@ void AEnemyBase::OnDeath(UAnimMontage* DeathAnimation)
 		SplitPickle();
 	}else
 	{
+		HStatHandler->IncreaseStatValue(enemyLootType,1,GetTargetActor());
 		Destroy();
 	}
 }
@@ -136,7 +137,6 @@ void AEnemyBase::SplitPickle()
 	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 	GetWorld()->SpawnActor<AEnemyBase>(EnemyClass, GetActorLocation() + FVector(100, 0, 0), FRotator::ZeroRotator, SpawnParameters);
 	GetWorld()->SpawnActor<AEnemyBase>(EnemyClass, GetActorLocation() + FVector(-100, 0, 0), FRotator::ZeroRotator, SpawnParameters);
-	GetWorld()->SpawnActor<AEnemyBase>(EnemyClass, GetActorLocation() + FVector(0, -100, 0), FRotator::ZeroRotator, SpawnParameters);
 	Destroy();
 }
 

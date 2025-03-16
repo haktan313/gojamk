@@ -33,6 +33,8 @@ public:
 	TSubclassOf<ASpitForPickle> SpitForPickleClass;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Enemy")
 	TSubclassOf<AEnemyBase> EnemyClass;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Enemy")
+	FString enemyLootType;
 	
 	AEnemyBase();
 

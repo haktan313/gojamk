@@ -25,6 +25,10 @@ AJoseMorinho::AJoseMorinho()
 	HTokenSystemComponent = CreateDefaultSubobject<UHTokenSystemComponent>(TEXT("HTokenSystemComponent"));
 	HStatHandler = CreateDefaultSubobject<UHStatHandler>(TEXT("HStatHandler"));
 	HStatHandler->OnDeath.AddDynamic(this, &AJoseMorinho::OnDeath);
+	HStatHandler->statNameCurrentValue.Add(FString("tomato"),0);
+	HStatHandler->statNameMaxValue.Add(FString("tomato"),3);
+	HStatHandler->statNameCurrentValue.Add(FString("pickle"),0);
+	HStatHandler->statNameMaxValue.Add(FString("pickle"),6);
 }
 
 void AJoseMorinho::BeginPlay()
